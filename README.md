@@ -47,7 +47,7 @@ But if you want, you can attach image or text file:
     "additional_file": "image.png/text.txt"
 }
 
-## *Note*
+*Note*
 
 If you're using Postman, and want to send an additional_file, use form-data instead of raw in body
 
