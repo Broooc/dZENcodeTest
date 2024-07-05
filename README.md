@@ -4,7 +4,7 @@ This is a test Node.js app to show my coding skills
 
 In this Node.js app I'm using ExpressJS, WebSocket, ORM, Git, MySQL, CAPTCHA verification and Docker
 
-#REST API
+# _REST API_
 
 First, we need to pass CAPTCHA authentication, and for that, we need request it
 
@@ -47,7 +47,8 @@ But if you want, you can attach image or text file:
     "additional_file": "image.png/text.txt"
 }
 
-##*Note*
+## *Note*
+
 If you're using Postman, and want to send an additional_file, use form-data instead of raw in body
 
 Also, you can get all the messages from the database, you just need to make this GET request:
@@ -58,7 +59,7 @@ And you can even delete a message from a MySQL database, you only need to pass t
 
 http://192.168.0.104:5000/message/delete-message?id=number
 
-#WebSocket
+# _WebSocket_
 
 Also, you can connect to this application by websocket and receive a message if somebody creating new message
 
