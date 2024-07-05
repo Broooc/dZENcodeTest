@@ -6,10 +6,10 @@ class WebSocketService {
 
         const userInfo = structuredClone(message);
 
-        delete userInfo.dataValues["text"];
+        delete userInfo.dataValues["message"];
 
         const messageToTheClient = JSON.stringify({
-            message: `${message.user_name} posted new message: ${message.dataValues.text}`,
+            message: `${message.user_name} posted new message: ${message.dataValues.message}`,
             additional_data: userInfo.dataValues
         });
 

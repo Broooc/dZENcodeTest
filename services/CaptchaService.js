@@ -1,5 +1,6 @@
 const TokenService = require('./TokenService')
 const nodeCaptcha = require('node-svgcaptcha');
+const { Forbidden, Unauthorized } = require('../errors/errors')
 
 
 class CaptchaService {
@@ -15,20 +16,40 @@ class CaptchaService {
             noise: 1 // level of noise (points) in the captcha
         }) 
 
-        const token = await TokenService.generateToken({fingerprint, value: Capthca.captchaValue})
+        const secretCaptchaKey = process.env.CAPTCHA_SECRET_KEY
 
-        return { token, image: Capthca.svg }
+        const captchaToken = await TokenService.generateToken({ fingerprint, value: Capthca.captchaValue, image: Capthca.svg }, secretCaptchaKey, { expiresIn: '10m' })
+
+        return { captchaToken, image: Capthca.svg }
         
     }
 
-    static async VerifyCaptcha(token, code) {
+    static async VerifyCaptcha(captchaToken, code) {
+
+        if (!captchaToken) {
+            throw new Unauthorized('No token provided');
+        }
         
-        const verifiedToken = await TokenService.verifyToken(token)
-        
-        if (verifiedToken.value === code) {
-            return true
-        } else {
-            return false
+        try {
+
+            const secretCaptchaKey = process.env.CAPTCHA_SECRET_KEY
+
+            const verifiedCaptchaToken = await TokenService.verifyToken(captchaToken, secretCaptchaKey)
+            
+            if (verifiedCaptchaToken.value === code) {
+
+                const secretAccessKey = process.env.ACCESS_SECRET_KEY
+
+                const accessToken = await TokenService.generateToken({fingerprint: verifiedCaptchaToken.fingerprint, value: code, image: verifiedCaptchaToken.image}, secretAccessKey, { expiresIn: '1h' })
+
+                return accessToken
+
+            } else {
+                throw new Error('The capthca code is invalid')
+            }
+
+        } catch (err) {
+            throw new Forbidden(err.message)
         }
 
     }

@@ -4,14 +4,18 @@ const cookieParser = require('cookie-parser')
 const dotenv = require('dotenv')
 const Fingerprint = require('express-fingerprint')
 const cors = require('cors')
+const bodyParser = require('body-parser')
 
 dotenv.config()
 
 const app = express()
 
 app.use(cors({
-    origin: true
+    origin: true,
+    credentials: true
 }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(cookieParser())
 app.use(Fingerprint({

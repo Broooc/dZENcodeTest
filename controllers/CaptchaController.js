@@ -9,9 +9,9 @@ class CaptchaController {
 
             const { fingerprint } = req
             
-            const { token, image } = await CaptchaService.createCaptcha(fingerprint)
+            const { captchaToken, image } = await CaptchaService.createCaptcha(fingerprint)
 
-            res.cookie("captchaToken", token)
+            res.cookie("captchaToken", captchaToken)
 
             return res.send(`
                 <!DOCTYPE html>
@@ -21,26 +21,12 @@ class CaptchaController {
                     </head>
                     <body>
                     ${image}
-                    <input type="text" class="input" />
-                    <button class="button">Submit</button>
-                    <script>
-                        document.querySelector(".button").addEventListener('click', async () => {
-                            let inputValue = document.querySelector(".input").value;
-
-                            const response = await fetch('http://192.168.0.104:5000/message/submit-captcha', {
-                                method: "post",
-                                headers: {'Content-Type':'application/json'},
-                                body: JSON.stringify({ code: inputValue }),
-                            })
-
-                        })
-                    </script>
+                    <p>Send POST request to the <strong>http://192.168.0.104:5000/message/submit-captcha</strong> and to the request body write: {"code": "captcha_code"}</p>
                     </body>
                 </html>
             `)
 
         } catch (err) {
-            console.log(err)
             return ErrorUtils.catchError(res, err)
         }
 
@@ -50,9 +36,26 @@ class CaptchaController {
 
         try {
 
-            const isCaptchaValid = await CaptchaService.VerifyCaptcha(req.cookies.captchaToken, req.body.code)
+            const captchaToken = req.cookies.captchaToken
 
-            return res.send(isCaptchaValid)
+            const accessToken = await CaptchaService.VerifyCaptcha(captchaToken, req.body.code)
+
+            res.clearCookie("captchaToken")
+
+            res.cookie("accessToken", accessToken)
+
+            return res.status(200).send(`
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <title>Test Captcha</title>
+                </head>
+                <body>
+                <p>Now you can send POST request to the <strong>http://192.168.0.104:5000/message/new-message</strong> and create a new message; <br>Body example: <br>{<br>"message": "text message"<br>"email": "myEmail@mail.com"<br>"user_name": "user1"<br>"additional_data": "image.png/text.txt"<br>}</p>
+                <p>If you are using Postman, use form-data to send data</p>
+                </body>
+            </html>
+        `);
 
         } catch (err) {
             console.log(err)
