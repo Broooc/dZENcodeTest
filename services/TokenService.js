@@ -5,7 +5,9 @@ class TokenService {
 
     static async generateToken(payload, secretKey, params) {
 
-        return jwt.sign(payload, secretKey, params)
+        return jwt.sign(payload, secretKey, {
+            h
+        })
 
     }
 
@@ -32,6 +34,7 @@ class TokenService {
 
             req.userAccessToken = verifiedAccessToken
         } catch (err) {
+            console.log(err)
             return res.status(403).json({error: err.message, status: 403})
         }
 

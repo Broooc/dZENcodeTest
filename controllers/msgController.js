@@ -34,6 +34,7 @@ class messageController {
 
 
         } catch (err) {
+            console.log(err)
             return ErrorUtils.catchError(res, err)
         }
 

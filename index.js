@@ -26,7 +26,7 @@ app.use(Fingerprint({
 }))
 app.use("/message", messageRouter)
 
-const listen = 5000
+const listen = process.env.PORT || 5000
 
 app.listen(listen, () => {
     console.log(`Server is running on port: ${listen}`)

@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 const connection = new Sequelize('dzencodeDB', 'root', 'root', {
-    host: 'localhost',
+    host: process.env.HOST,
     dialect: 'mysql'
 })
 
