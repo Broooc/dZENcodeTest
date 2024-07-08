@@ -5,9 +5,7 @@ class TokenService {
 
     static async generateToken(payload, secretKey, params) {
 
-        return jwt.sign(payload, secretKey, {
-            h
-        })
+        return jwt.sign(payload, secretKey, params)
 
     }
 

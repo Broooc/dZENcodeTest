@@ -45,7 +45,7 @@ class CaptchaService {
                 return accessToken
 
             } else {
-                throw new Error('The capthca code is invalid')
+                throw new Error('The capthca code is invalid, try to send GET request to /get-captcha endpoint again to get new CAPTCHA')
             }
 
         } catch (err) {

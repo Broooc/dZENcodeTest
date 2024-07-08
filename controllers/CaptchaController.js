@@ -21,7 +21,7 @@ class CaptchaController {
                     </head>
                     <body>
                     ${image}
-                    <p>Send POST request to the <strong>http://localhost:8001/message/submit-captcha</strong> and to the request body write: {"code": "captcha_code"}</p>
+                    <p>Send POST request to the <strong>http://localhost:5000/message/submit-captcha</strong> and to the request body write: {"code": "captcha_code"}</p>
                     </body>
                 </html>
             `)
@@ -52,7 +52,7 @@ class CaptchaController {
                     <title>Test Captcha</title>
                 </head>
                 <body>
-                <p>Now you can send POST request to the <strong>http://localhost:8001/message/new-message</strong> and create a new message; <br>Body example: <br>{<br>"message": "text message"<br>"email": "myEmail@mail.com"<br>"user_name": "user1"<br>"additional_data": "image.png/text.txt"<br>}</p>
+                <p>Now you can send POST request to the <strong>http://localhost:5000/message/new-message</strong> and create a new message; <br>Body example: <br>{<br>"message": "text message"<br>"email": "myEmail@mail.com"<br>"user_name": "user1"<br>"additional_data": "image.png/text.txt"<br>}</p>
                 <p>If you are using Postman, use form-data to send data</p>
                 </body>
             </html>
