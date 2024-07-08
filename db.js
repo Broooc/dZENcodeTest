@@ -1,13 +1,14 @@
 const { Sequelize } = require('sequelize');
+const dotenv = require('dotenv')
+const ConnectionParams = require('./dbcobfig')
+
+dotenv.config()
 
 const DBname = 'dzencodedb'
 
-const password = 'root'
-
-const username = 'root'
-
-const connection = new Sequelize(null, username, password, {
-    host: process.env.HOST,
+const connection = new Sequelize(null, ConnectionParams.username, ConnectionParams.password, {
+    host: ConnectionParams.host,
+    port: ConnectionParams.port,
     dialect: 'mysql',
     logging: false
 })
@@ -18,8 +19,9 @@ connection.query(`CREATE DATABASE IF NOT EXISTS ${DBname}`).then(() => {
     connection.close()
 })
 
-const newConnection = new Sequelize(DBname, username, password, {
-    host: process.env.HOST,
+const newConnection = new Sequelize(DBname, ConnectionParams.username, ConnectionParams.password, {
+    host: ConnectionParams.host,
+    port: ConnectionParams.port,
     dialect: 'mysql',
     logging: false
 })

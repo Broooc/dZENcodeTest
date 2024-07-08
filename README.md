@@ -6,4 +6,4 @@ In this Node.js app I'm using ExpressJS, WebSocket, ORM, Git, MySQL, CAPTCHA ver
 
 First, run npm install command;
 
-Then, check out DOCKER.md, API.md and WEBSOCKET.md to get more information about using this app
+Then, check out DOCKER.md, SQL.md, API.md and WEBSOCKET.md to get more information about using this app
