@@ -3,14 +3,13 @@
 This is an instruction for starting this app in the docker container
 
 
-First, you need to build the docker image with that command:
+First: you need to build the docker image with that command:
 
-docker build . _image-name_
+docker build . -t _image-name_:v1
 
 After that, you need to start the docker container:
 
-docker run --add-host=host.docker.internal:host-gateway -d -p 5000:5000 --env-file ./.env _image-name_
-
+docker run --add-host=host.docker.internal:host-gateway -d -p 5000:5000 -p 443:443 --env-file ./.env _image-name_:v1
 
 *Note*
 
